@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,15 +15,16 @@ import { TypographyH4 } from "@/components/typography/h4";
 import { TypographyP } from "@/components/typography/p";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { registerSchema } from "@/schemas/register";
+import { registerSchema } from "@/schemas/barber/register";
 
 export const Register = () => {
+  const navigate = useNavigate();
+
 
   const registerForm = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
-      establishment: "",
       phone: "",
       email: "",
       password: "",
@@ -34,7 +36,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="flex flex-col p-4 gap-8 bg-red">
+    <div className="flex flex-col gap-8">
       <TypographyH4>Possui uma barbearia? <br /> Cadastre já!</TypographyH4>
       <TypographyP>
         Experimente todas as funcionalidades por um preço que cabe no seu bolso.
@@ -49,19 +51,6 @@ export const Register = () => {
                 <FormLabel>Digite seu nome completo</FormLabel>
                 <FormControl>
                   <Input placeholder="Seu nome completo" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={registerForm.control}
-            name="establishment"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Digite o nome do seu estabelecimento</FormLabel>
-                <FormControl>
-                  <Input placeholder="Nome do estabelecimento" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +97,7 @@ export const Register = () => {
           />
           <div className="flex gap-4 justify-end">
             <Button type="submit">Salvar</Button>
-            <Button type="button" variant="secondary">
+            <Button type="button" variant="secondary" onClick={() => navigate("/")}>
               Cancelar
             </Button>
           </div>
