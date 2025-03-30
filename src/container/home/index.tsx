@@ -8,7 +8,7 @@ export const Home = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <Card onClick={() => navigate("/barbearia")}>
+      <Card onClick={() => navigate("/barber/register")}>
         <CardHeader>
           <CardTitle>
             <StorefrontIcon />
@@ -18,7 +18,7 @@ export const Home = () => {
         </CardHeader>
       </Card>
 
-      <Card onClick={() => navigate("/register")}>
+      <Card onClick={() => navigate("/user/register")}>
         <CardHeader>
           <CardTitle>
             <AccountCircleIcon />

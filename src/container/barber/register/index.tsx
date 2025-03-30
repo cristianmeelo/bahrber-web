@@ -20,7 +20,6 @@ import { registerSchema } from "@/schemas/barber/register";
 export const Register = () => {
   const navigate = useNavigate();
 
-
   const registerForm = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -31,6 +30,24 @@ export const Register = () => {
       password: "",
     },
   });
+
+  const formatPhoneNumber = (value: string): string => {
+    const onlyNums = value.replace(/\D/g, "");
+
+    // Retorna vazio se não houver números
+    if (onlyNums.length === 0) {
+      return "";
+    }
+
+    if (onlyNums.length <= 2) {
+      return `(${onlyNums}`;
+    } else if (onlyNums.length <= 7) {
+      return `(${onlyNums.slice(0, 2)}) ${onlyNums.slice(2)}`;
+    } else {
+      return `(${onlyNums.slice(0, 2)}) ${onlyNums.slice(2, 7)}-${onlyNums.slice(7, 11)}`;
+    }
+  };
+
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
     console.log(values);
@@ -77,12 +94,23 @@ export const Register = () => {
               <FormItem>
                 <FormLabel>Telefone para contato</FormLabel>
                 <FormControl>
-                  <Input placeholder="(XX) XXXXX-XXXX" {...field} />
+                  <Input
+                    placeholder="(XX) XXXXX-XXXX"
+                    value={field.value}
+                    type="tel" // Garante o teclado numérico
+                    inputMode="numeric" // Outra opção que reforça o comportamento
+                    onChange={(e) => {
+                      const formatted = formatPhoneNumber(e.target.value);
+                      field.onChange(formatted); // Atualiza o valor no React Hook Form
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+
           <FormField
             control={registerForm.control}
             name="email"
