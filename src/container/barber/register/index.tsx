@@ -97,11 +97,11 @@ export const Register = () => {
                   <Input
                     placeholder="(XX) XXXXX-XXXX"
                     value={field.value}
-                    type="tel" // Garante o teclado numérico
-                    inputMode="numeric" // Outra opção que reforça o comportamento
+                    type="tel"
+                    inputMode="numeric"
                     onChange={(e) => {
                       const formatted = formatPhoneNumber(e.target.value);
-                      field.onChange(formatted); // Atualiza o valor no React Hook Form
+                      field.onChange(formatted);
                     }}
                   />
                 </FormControl>
@@ -118,7 +118,9 @@ export const Register = () => {
               <FormItem>
                 <FormLabel>E-mail</FormLabel>
                 <FormControl>
-                  <Input placeholder="seuemail@exemplo.com" {...field} />
+                  <Input
+                    type="email"
+                    placeholder="seuemail@exemplo.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
